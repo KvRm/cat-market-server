@@ -1,22 +1,25 @@
 import { relations } from 'drizzle-orm'
-import * as t from 'drizzle-orm/mysql-core'
-import { mysqlTable as table } from 'drizzle-orm/mysql-core'
+import { int, mysqlTable, varchar } from 'drizzle-orm/mysql-core'
 import { schemaHelper } from '../helpers'
+import { cartsToProducts } from './carts-to-products'
 import { categories } from './categories'
 
-export const products = table(
+export const products = mysqlTable(
   'products',
   {
-    id: t.int().primaryKey().autoincrement(),
-    name: t.varchar('name', { length: 256 }).notNull(),
-    categoryId: t.int('category_id').notNull(),
-    imageUrl: t.varchar('image_url', { length: 1024 }).notNull(),
+    id: int().primaryKey().autoincrement(),
+    name: varchar('name', { length: 256 }).notNull(),
+    categoryId: int('category_id').notNull(),
+    imageUrl: varchar('image_url', { length: 1024 }).notNull(),
+    price: int('prices').notNull(),
 
     ...schemaHelper.timestamps,
   },
 )
 
-export const productsRelations = relations(products, ({ one }) => ({
+export const productsRelations = relations(products, ({ one, many }) => ({
+  cartsToProducts: many(cartsToProducts),
+
   category: one(categories, {
     fields: [products.categoryId],
     references: [categories.id],

@@ -1,24 +1,23 @@
-import * as t from 'drizzle-orm/mysql-core'
-import { mysqlTable as table } from 'drizzle-orm/mysql-core'
+import { int, mysqlTable, uniqueIndex, varchar } from 'drizzle-orm/mysql-core'
 import { schemaHelper } from '../helpers'
 
-export const users = table(
+export const users = mysqlTable(
   'users',
   {
-    id: t.int().primaryKey().autoincrement(),
-    firstName: t.varchar('first_name', { length: 256 }).notNull(),
-    secondName: t.varchar('second_name', { length: 256 }),
-    lastName: t.varchar('last_name', { length: 256 }).notNull(),
-    email: t.varchar({ length: 256 }).notNull().unique(),
-    phone: t.varchar({ length: 20 }).notNull(),
-    sex: t.int().notNull(),
-    password: t.varchar({ length: 256 }).notNull(),
+    id: int().primaryKey().autoincrement(),
+    firstName: varchar('first_name', { length: 256 }).notNull(),
+    secondName: varchar('second_name', { length: 256 }),
+    lastName: varchar('last_name', { length: 256 }).notNull(),
+    email: varchar({ length: 256 }).notNull().unique(),
+    phone: varchar({ length: 20 }).notNull(),
+    sex: int().notNull(),
+    password: varchar({ length: 256 }).notNull(),
 
     ...schemaHelper.timestamps,
   },
   (table) => {
     return {
-      emailIndex: t.uniqueIndex('email_idx').on(table.email),
+      emailIndex: uniqueIndex('email_idx').on(table.email),
     }
   },
 )

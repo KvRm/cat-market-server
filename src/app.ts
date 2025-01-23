@@ -8,6 +8,7 @@ import fastifyStatic from '@fastify/static'
 import fastify from 'fastify'
 import { setupDb } from './db/setup'
 import { setupAuthModule } from './modules/auth'
+import { setupCartsModule } from './modules/cart'
 import { setupCategoriesModule } from './modules/categories'
 import { setupProductsModule } from './modules/products'
 import { setupUserModule } from './modules/user'
@@ -43,6 +44,7 @@ export async function build(opts = {}) {
   setupAuthModule(app)
   setupCategoriesModule(app)
   setupProductsModule(app)
+  setupCartsModule(app)
 
   await setInitialData()
 

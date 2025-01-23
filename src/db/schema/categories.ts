@@ -1,14 +1,13 @@
 import { relations } from 'drizzle-orm'
-import * as t from 'drizzle-orm/mysql-core'
-import { mysqlTable as table } from 'drizzle-orm/mysql-core'
+import { int, mysqlTable, varchar } from 'drizzle-orm/mysql-core'
 import { schemaHelper } from '../helpers'
 import { products } from './product'
 
-export const categories = table(
+export const categories = mysqlTable(
   'categories',
   {
-    id: t.int().primaryKey().autoincrement(),
-    name: t.varchar('name', { length: 256 }).notNull(),
+    id: int().primaryKey().autoincrement(),
+    name: varchar('name', { length: 256 }).notNull(),
 
     ...schemaHelper.timestamps,
   },
