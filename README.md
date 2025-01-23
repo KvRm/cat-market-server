@@ -5,12 +5,13 @@
 ```
 npm ci
 ```
-3. Сделать миграции
+3. Создать файл .env и скопировать в него содержимое .env example
+4. Сделать миграции
 ```
 npm run drizzle:generate
 npm run drizzle:migrate
 ```
-4. Запустить дев сервер
+5. Запустить дев сервер
 ```
 npm run start
 ```
